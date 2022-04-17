@@ -1,0 +1,184 @@
+close all
+warning off
+clear wp
+
+save_video = 0;
+save_height = 0;
+save_posxy = 0;
+test_number = 8;
+tol_wp = 5.5;
+
+file = ['videos_testes/',num2str(test_number),'_data.txt'];
+% file = ['C:\Users\walber jr\Documents\Tese\pyparrot-master\data_saved',num2str(test_number),'.txt'];
+% file = ['C:\Users\walber jr\Documents\Tese\pyparrot-master\data_saved_final.txt'];
+position = readtable(file);
+f = figure();
+% axis([0 150 40 180])
+axis([0 160 0 300])
+% axis([0 1920 0 1080])
+% axis equal
+axis square
+grid on
+hold on
+
+%{
+% fix 5_data
+% for k = 1:9
+%     if(str2num(position.Var2{k}(1))>1)
+%         word1{k}(:) = position.Var2{k}(1:4);
+%         word2{k}(:) = position.Var2{k}(5:7);
+%     else
+%         word1{k}(:) = position.Var2{k}(1:5);
+%         word2{k}(:) = position.Var2{k}(6:8);
+%     end
+% end
+% for k = 10:2293
+%     if(str2num(position.Var2{k}(1))>1)
+%         word1{k}(:) = position.Var2{k}(1:4);
+%         word2{k}(:) = position.Var2{k}(5:8);
+%     else
+%         word1{k}(:) = position.Var2{k}(1:5);
+%         word2{k}(:) = position.Var2{k}(6:9);
+%     end
+% end
+% for k = 2294:2342
+%     if(str2num(position.Var2{k}(1))>1)
+%         word1{k}(:) = position.Var2{k}(1:4);
+%         word2{k}(:) = position.Var2{k}(5:7);
+%     else
+%         word1{k}(:) = position.Var2{k}(1:5);
+%         word2{k}(:) = position.Var2{k}(6:8);
+%     end
+% end
+% fid = fopen('new_5_data.txt','wt');
+% for i=1:length(word1)
+%     fprintf(fid, [num2str(position.Var1(i)),',',word1{i},',',word2{i},'\n']);
+% end
+% fclose(fid);
+%}
+%remove zeros
+a = position.Var1(position.Var1~=0.0);
+b = position.Var2(position.Var2~=0.0);
+c = position.Var3(position.Var3~=0.0);
+clear position
+position.Var1 = a;
+position.Var2 = b;
+position.Var3 = c;
+%{
+%xy for 3_data
+% axis([0 350 100 400])
+% hold on 
+% grid on
+% pos_init = [128.07, 253.85];
+% wp(1,:) = [pos_init(1)-45, pos_init(2)+45];
+% wp(2,:) = [pos_init(1), pos_init(2)+90];
+% plot(pos_init(1),pos_init(2),'b*')
+% plot(wp(1,1),wp(1,2),'k*')
+% plot(wp(2,1),wp(2,2),'k*')
+% a=[];
+% b=[];
+% j=1;
+% for i=1:2:1962
+%     a(j)=position.Var1(i);
+%     b(j)=position.Var2(i);
+%     j = j + 1;
+%     plot(a,b,'b');
+%     drawnow;
+%     pause(0.03)
+% end
+% plot(a,b,'b');
+
+%z
+% axis([0 100])
+% hold on 
+% grid on
+% a=[];
+% b=[];
+% j=1
+% for i=2:2:1962
+%     a(j)=position.Var1(i);
+%     b(j)=j
+%     j = j + 1;
+%     plot(a,b,'b');
+%     drawnow;
+%     pause(0.05)
+% end
+% plot(a,b,'b');
+%}
+
+% video
+% pos_init = [position.Var1(1), position.Var2(1)];
+% pos_init = [120.86, 155.34-90];
+% wp(1,:) = [pos_init(1)-45, pos_init(2)+45];
+% wp(2,:) = [pos_init(1), pos_init(2)+90];
+% plot(pos_init(1),pos_init(2),'b*')
+% plot(wp(1,1),wp(1,2),'k*')
+% plot(wp(2,1),wp(2,2),'k*')
+% p(1) = plot(position.Var1(1:2),position.Var2(1:2),'b');
+% for i = 1:length(position.Var1)-1 
+%     p(i+1) = plot(position.Var1(1:i+1),position.Var2(1:i+1),'b');
+%     delete(p(i))
+%     drawnow
+%     if(save_video)
+%         F(i) = getframe(gcf);
+%     end
+%     pause(0.04)
+% end
+
+%plot all
+plot(position.Var1,position.Var2,'b');
+tol = 5.5;
+hold on
+grid on
+axis equal
+pos_init = [117.85, 81.55];
+% pos_init = [120.86, 155.34-90];
+wp(1,:) = [pos_init(1)-54, pos_init(2)];
+wp(2,:) = [pos_init(1)-54, pos_init(2)+54];
+wp(3,:) = [pos_init(1), pos_init(2)+54];
+
+h = viscircles(wp(1,:),tol);
+h = viscircles(wp(2,:),tol);
+h = viscircles(wp(2,:),tol);
+
+plot(pos_init(1),pos_init(2),'b*')
+plot(wp(1,1),wp(1,2),'k*')
+plot(wp(2,1),wp(2,2),'k*')
+plot(wp(3,1),wp(3,2),'k*')
+return
+% height per time
+h = figure()
+h1 = plot(1:length(position.Var3),position.Var3,'b');
+xlabel("tempo")
+ylabel("altura (cm)")
+title("Altura do drone durante o percurso")
+grid on
+if(save_height)
+    saveas(h,[num2str(test_number),'_data_h.png']);
+end
+
+% x - y
+h = figure()
+h1 = plot(position.Var1,position.Var2,'b');
+hold on
+plot(pos_init(1),pos_init(2),'b*')
+plot(wp(1,1),wp(1,2),'k*')
+h1 = plot(position.Var1,position.Var2,'b');
+xlabel("distância em x (cm)")
+ylabel("distância em y (cm)")
+title("Posições do drone durante percurso")
+grid on
+if(save_posxy)
+    saveas(h,[num2str(test_number),'_data_xy.png']);
+end
+
+if(save_video)
+    disp("saving...")
+    video = VideoWriter([num2str(test_number),"_data"],"MPEG-4");
+    video.Quality = 80;
+    video.FrameRate = 20;
+    open(video);
+    writeVideo(video, F);
+    close(video);
+    disp("saved")
+end

@@ -1,0 +1,49 @@
+-----------------------------------------------------------------
+NODE.JS:
+
+
+Fly Parrot MiniDrones with Node
+https://github.com/fetherston/npm-parrot-minidrone
+
+https://www.mathworks.com/matlabcentral/fileexchange/68977-nodejs-in-matlab
+
+http://thinkingonthinking.com/exploring-noble-and-blueiot/
+
+https://devzone.nordicsemi.com/f/nordic-q-a/26361/what-is-noble-and-how-do-i-use-it
+
+https://www.npmjs.com/package/noble
+
+https://github.com/noble/noble
+
+https://forum.developer.parrot.com/t/minidrone-js-parrot-minidrone-library/7062
+
+X https://www.mathworks.com/matlabcentral/answers/323737-how-to-use-matlab-source-function-with-node-js-app-in-ibm-bluemix
+
+------------------------------------------------------------------
+Learn to Code with a Drone
+https://www.tynker.com/learn-to-code/code-this-drone/
+
+GOBOT Minidrone
+https://gobot.io/documentation/platforms/minidrone/
+
+pyparrot
+Python interface for Parrot Drones
+pyparrot was designed and implemented by Dr. Amy McGovern to program Parrot Mambo and Parrot Bebop 2 drones using python.
+https://github.com/amymcgovern/pyparrot
+
+ar-drone
+An implementation of the networking protocols used by the Parrot AR Drone 2.0. It appears that 1.0 drones are also compatible.
+https://github.com/felixge/node-ar-drone
+
+Programming Parrot Drones with Tynker
+https://www.tynker.com/blog/articles/ideas-and-tips/coding-at-school/programming-parrot-drones-with-tynker/
+
+MATLAB R2018b Connect a PARROT Mambo Minidrone to a Windows System Using Bluetooth
+https://www.mathworks.com/help/supportpkg/parrot/ug/connect-parrot-mambo-minidrone-to-computer-using-bluetooth.html 
+
+AUTONOMOUS AR PARROT DRONE 2.0 FLYING
+https://www.instructables.com/id/Autonomous-AR-Parrot-Drone-20-Flying/
+
+Drone simulation with Gazebo:
+https://www.youtube.com/watch?v=wcVjTKF_JYI
+

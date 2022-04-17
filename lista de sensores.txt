@@ -1,0 +1,31 @@
+The sensors are:
+
+battery (defaults to 100 and stays at that level until a real reading is received from the drone)
+flying_state: This is updated as frequently as the drone sends it out and can be one of “landed”, “takingoff”, “hovering”, “flying”, “landing”, “emergency”, “rolling”, “init”. These are the values as specified in minidrone.xml.
+gun_id: defaults to 0 (as far as I can tell, it is only ever 0 when it comes from the drone anyway)
+gun_state: “READY” or “BUSY” as sent by the drone, if a gun is attached. Defaults to None.
+claw_id: defaults to 0
+claw_state: “OPENING”, “OPENED”, “CLOSING”, “CLOSED” as sent by the drone, if a claw is attached. Defaults to None.
+speed_x, speed_y, speed_z, speed_ts: the speed in x (forward > 0), y (right > 0), and z (down > 0). The ts is the timestamp that the speed was valid.
+altitude, altitude_ts: wifi only, altitude in meters. Zero is where you took off. The ts is the timestamp where the altitude was valid.
+quaternion_w, quaternion_x, quaternion_y, quaternion_z, quaternion_ts: wifi only. Quaternion as estimated from takeoff (which is set to 0). Ranges from -1 to 1. ts is the timestamp where this was valid.
+get_estimated_z_orientation(): returns the estimated orientation using the unit quaternions. Note that 0 is the direction the drone is facing when you boot it up
+sensors_dict: all other sensors are saved by name in a dictionary. The names come from the minidrone.xml and common.xml.
+
+#ADDED:
+mambo.sensors.posx
+mambo.sensors.posy
+mambo.sensors.posz
+mambo.sensors.psi
+mambo.sensors.ts
+
+Get the drone position from takeoff point (0, 0, 0, 0).
+
+The orthonormal basis is fixed at this point. The axis are
+ oriented the following way :
+
+* X : From the rear of the drone to its front. (negativo pra trás, em centimetros) (mesmo do que foi dito)
+* Y : From the right of the drone to its left. (negativo pra esquerda, em centimetros) (contrario ao que foi dito)
+* Z : Orthogonal to X and Y and oriented upward.
+ (negativa para cima, em centimetros) (contrario ao que foi dito)
+* Psi : From 180 to -180 in the clockwise direction

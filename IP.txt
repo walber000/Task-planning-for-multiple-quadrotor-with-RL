@@ -1,0 +1,4 @@
+90 3a e6 21 5e 20 (icone = controle)
+d0 3a 5e 20 e6 21 (icone = gabinete)
+
+D0:3A:BD:55:E6:23

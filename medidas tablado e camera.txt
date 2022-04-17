@@ -1,0 +1,11 @@
+tablado: 2,79m x 1,64m x ~2,46m (incluso bordas)
+bordas: 2cm
+
+camera1: 90cm do canto do tablado (com borda)
+camera2: 53cm do canto do tablado (com borda)
+baseline: 279 - 90 - 53 = 136cm
+
+cameras com inclinação "1" para o centro:
+
+cam1: 20cm - 158cm
+cam2: 123cm - 266cm

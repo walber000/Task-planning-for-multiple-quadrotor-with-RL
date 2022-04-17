@@ -1,0 +1,270 @@
+-------------------------------------------------------------
+29/04
+
+inicial/last wp of 3_data.txt: Waypoint ( 128.07 , 253.85 ) alcançado!
+
+-------------------------------------------------------------
+01/05
+
+4_data very good (but no video) 120.86 , 155.34 final (45,45, 90,0)
+5_data good,  116.69 , 155.77
+
+------------------------------------------------------------
+02/05
+
+6_data: 109,83 -> -54x -> -54x+54y ->+54y -> init (deu ruim no final, camera miss) (tol 5.5)
+
+------------------------------------------------------------
+03/05
+
+7_data: quadrado incompleto, msm teste acima.
+8_data: supremo (bateria acabou no final, causando variaçao de altura, morreu antes do landing, mas deu bom)
+9_data: pega peça, mas cai tentando subir
+10_data: mov em triangulo, checar se deu bom (morreu no final por ang0)
+
+---------------------------------------------------------------------
+04/05
+
+1: lab, <, ruim, video bom
+2: 
+4: lab, <, bom, sem video
+5: lab, <, meio bom, video bom
+8: lab, quadrado, bom, video bom
+9: lab, pegar peça, ruim, video bom (ruim no final)
+
+--------------------------------------------------------------------
+11/05
+
+feito LA_traj_multi_deluxe: nao calcula Astar para cada movimento no grid, mas armazena waypoints e
+os usa, usando Astar apenas para novo set de waypoints.
+
+Astar_multi_sim (usado em deluxe e manda waypoints(2:end)
+Astar_multi_sim_LA (usado em LA_traj_multi_sim) manda apenas ultimo wp
+
+tempo total: 169.925
+n_iter: 406
+tempo/iter: 0.41853
+
+tempo total: 642.812
+n_iter: 582
+tempo/iter: 1.1045
+
+(x) nao eh necessario falar da modificaçao na heuristica, ja que a aplicação dela é inutil (true, dont do it)
+(x) usar r para matlab e gazebo (not sooo important, but ok)
+(x) estudo de caso apenas 1, mostrar efeito dos parametros?
+(mostrar tempo total de cada drone, dividir em tempo indo carregar/descarregar/conflito)
+
+(x) colocar exemplo de explosao de possibilidades na introducao
+
+-> mais uma referencia na introduçao
+
+-> estudo de caso com eug
+
+-> terminar escalabilidade
+
+-> imagem de planejamento do A* para gerenciamento de conflitos
+
+-> imagem do log A* sendo eficaz
+
+-> fazer tambem escalabilidade sem A*, ja que nao tem obs.
+
+-> alterar convergência do LA para finalizar caso treinamento nao esteja avançando
+
+-> remover condição de dist_media == dist
+
+--------------------------------------------------------
+08/06
+
+-> colocar dados da tabela
+-> alterar o fluxograma.
+-> gerar novo mapa com n=7 
+-> aprendizado usa distancia, execução mostra tempo, ver se comparando com velocidade linear da simulaçao se fica proximo pra comparar.
+-> ver se eug tem video.
+
+Sergio:
+-> "Possuem uma mesma velocidade genérica" o que alterar? nao ta aparecendo no pdf. alterei para "velocidade de translação"
+-> Marcação em "restrição de ordem dos objetos": nao entendi, pois eu digo que é criada uma prioridade
+
+--------------------------------------------------------
+15/06
+
+gerar figuras de distancia e reforço com grid para n=3 e n=7
+separar, nos resultados, treinamento de execução
+simulaçao n=7
+terminar de completar tabela
+dados n=5 e refazer n=3 e n=7 para terem restrições
+
+
+>> referencia: Nascimento AND Yoneyama
+>> sergio: plotar reforço medio no grafico do reforço?
+
+after meeting:
+>> plotar apenas reforço medio numa janela de 20 iterações (nao o reforço medio overall e nem o reforço comum)
+(x) procurar sobre o pacote que altera a referencia "and" para "e"
+>> ajustar tamanho da fonte dos labels dos graficos
+---------------------------------------------------------
+01/07
+
+alterando drone_wp_client.py para nao usar udp e usar ros, pois a localizaçao por udp ta dando alguns zeros.
+drone_wp_client.py que salva os dados da localizaçao, e nao o cam_pos4.
+fazendo 2 waypoints onde a coleta do objeto será manual (5s esperando para eu colocar o obj manualmente)
+videos 11_cam (Documents\Tese\videos_testes): teste de captura manual: deu certo, mas nao salvei os dados de pose
+refeito teste com tablado limpo. video 12_cam feito (data_saved_32).
+
+------------------------------------------------------
+03/07
+
+reuniao: oq fazer nos prox testes praticos:
+(x) timestamp no tempo de localizaçao
+(x) bacia para descarregar carga
+(x) correçao de guinada sem parar a translaçao, com tolerancia de 20 graus
+(x) no momento da descarga, nao pousar logo, para ver efeito da descarga na variaçao de altura
+(x) olhar segundo adaptador bluetooth pra fazer o multidrone usando servidor antigo
+
+------------------------------------------------------
+06/07
+
+arrumado drone_wp_client para caso receba via udp, nao ficar recebendo zeros
+(agr pode ser usado sem o ROS, junto com cam_pos4_client.py)
+como usar: ambos no servidor, dar cd na pasta dos codigos, executar com python3)
+feito timestamp em cam_pos4_client.py e drone_wp_client.py (passado pelo udp)
+via ros, quem salvava dados era o drone_wp_client, via udp é o cam_pos4_client.
+txt salvo com timestamp -> ok.
+drone_wp_client está com as duas opçoes, udp ou ros, está ativado o udp no momento.
+-----------------------------------------------------
+07/07
+
+drone_wp2_client: faz correçao de yaw sem parar o drone.
+data15,16 lixo
+cam_pos4_client manda posX = 999 se cameramiss, pois drone_wp_client(1 e 2) nao recebem mais
+leituras 0.
+trocando cameramiss de posX == 0 para posX > 900 em drone_wp2_client
+
+-----------------------------------------------------
+08/07
+
+testes de correct_yaw2 em drone_wp2_client:
+inercia faz ele continuar indo para frente após mudar orientação
+testado correct_yaw2 usando roll e nao yaw, not very good.
+
+-----------------------------------------------------
+09/07
+
+fazendo teste com drone_wp_client para mostrar timestamp, zona de descarga e reaçao de altura
+apos carga e descarga.
+>> testar tolerancia de angulo 20° para drone_wp2_client (correct_yaw2 com yaw)
+teste 13 good (videos:13, data:26), init pos: [101.40 66.29 57.98 90.0°] (xyza)
+novo BTdongle nao ta funfando, mas eh reconhecido
+---------------------------------------------------
+
+(x) separar gravaçao de videos: cam_h gravada pelo servidor e cam_teto pelo meu note. pra ver se melhora perda de quadros.
+>> testar gravaçao do jeito q daniel disse: gravar frames dps compilar video
+(x) aumentar vel maxima pra ele parar ("slowing" e "slowing close")
+2>> ao inves de parar qnd vel grande, diminuir pitch de 10 pra 5.
+(x) armazenar velocidades, angulo, e xy separados tbm.
+1>> correctyaw usando roll (testar roll proporcional ao erro de yaw, com correct yaw agindo permanentenmente)
+
+(1) Normalmente faça:
+    Comando_Pitch=10
+    Comando_Rool=k*Erro_guinada
+(2) Se abs(Vpitch) >= 30 cm/s,
+    faça por 1 s
+         Comando_Pitch=5
+         Comando_Roll=0
+    retorna para (1)
+(3) Se abs(Erro_guinada) > 20 graus,
+    Comando_Pitch=0
+    Comando_Roll=0
+    corrija Erro_Guinada até abs(Erro_guinada) <= 5 graus
+    retorna para (1)
+=========================
+(x) Faça log de x, y, z, teta, Erro_Guinada, Vx, Vy, Vz, todos com o timestamp
+(x) max erro yaw pra ativar correct: 20 graus
+
+---------------------------------------------
+13/07
+
+feito o log tambem com vx, vy, vz, erro_ang
+testado, data_saved28.txt (13x_data)
+
+---------------------------------------------
+14/07
+
+testado gravar uma cam no note (cam_videosaver1) e outra cam no servidor (cam_videosaver2), pareceu bom.
+pra velocidade ficar proxima, usar '25' no argumento do gravador no note e '28' no servidor'.
+
+---------------------------------------------
+15/07
+
+testado camsavers separados enquanto comanda o drone, deu uma acelerada no começo mas ficou bom no resto do video.
+pitch = 10 parece bom, consegue ir lento sem mto erro.
+tol_ang = 20 graus. (tol para fazer o correct yaw)
+vel_max aumentada.
+testando camsaver separados, tolang 20 e vel_max aumentada, tol_wp = 6.4:
+data_saved32 (14_data) teve uma ida boa, mas nao pegou obj por vacilo meu, e deu oscilaçao maluca na hora de pousar.
+>> vel de gravaçao ta alta, diminuir.
+
+----------------------------------------------
+16/07
+
+teste em drone_wp_client com correct_yaw2 alterando roll, velmax aumentado, vel gravaçao 0.7x, sem diminuiçao de pitch,
+wp_tol = 7, ang_tol = 20
+data_saved40 (15_data) bom, porem a peça nao caiu dentro da zona descarga.
+novo bluetooth funfou no rasp2 (raspbian)
+vel gravaçao 0.7x ficou boa.
+---------------------------------------------
+17/07
+
+data_saved45 (16_data) good, porem peça caiu fora da zona.
+correçao continua de angulo com k*erro_ang no roll
+correct yaw usando yaw mesmo.
+slowing e slowing close nao param, diminui pitch pela metade.
+data_saved47(17_data) good, mas nem pegou peça, garra nao fechou.
+data_saved48(18_data) good, mas errou peça na zona.
+>> colocar algo pra marcar zona de takeoff/landing e zona de carga.
+>> chegar se vx positivo eh frente, se vy positivo eh direita, vz positivo eh pra baixo.
+>> remover condição de ang_d>0 para gravação de erro_ang
+
+---------------------------------------------
+22/07
+
+cam_pos4_client testado com dois drones: ok (oclusão tbm ok).
+servidor antigo tbm eh ubuntu 16.04, tbm nao funfa o BT novo.
+o BT novo funfa no raspbian, usar no rasp2.
+
+---------------------------------------------
+04/08
+
+testado takeoff e movimentos simples com os dois drones conectados em apenas um dongle BT: funcionou bem.
+alterado drone_wp2_client.py para ser igual drone_wp_client, porem voar com endereço do segundo drone.
+>> testar garras dos dois drones ao msm tempo.
+>> voar os dois drones usando codigo completo, waypoints simples.
+
+--------------------------------------------
+06/08
+
+alterado upper_green em cam_pos4_client e cam_pos42_client (envia info dos dois drones por udp) para:
+np.array([85,255,255]), pois estava sendo cortado no meio por linha preta.
+Alem disso, size_max para detectar verde diminuido de 80 pra 20 (apenas em cam_pos42_client), para reconhecer msm
+caso quadrado verde seja cortado no meio.
+udp nao permite ter 2 receptores para o mesmo emissor, criando cam_pos42_ros e drone_wp1/2_ros para usar ROS.
+na vdd permite, usando modo multicast.
+(x) ja fiz o cam_pos42_ros, fazer os drone_ros
+>> testar multicast
+
+------------------------------------------
+07/08
+
+multicast nao funfou, usando ROS (criado drone_wp1/2_ros)
+alterado max_tilt de drone2 de 30 para 10, mto bom resultado (ficou bem mais lento) (só no teste logo apos alteraçao,
+nos outros testes voltou a ficar rapido)
+(drone2) alterado roll_base de 5 para -10
+(drone2) alterado k de correct_yaw usando roll de 1 para 0.5.
+(drone2) aumentado timesleep dps do takeoff de 1 pra 3, testar.
+
+-------------------------------------------
+11/08
+
+criado lower e upper blue2, azul claro, para pegar melhor a altura do drone2, em cam_pos42_ros.
+bias do drone2 começa pra direita (eu usava rollbase -12), mas dps fica ok (bias 0 talvez),
+por isso alterei o baseroll de -12 pra 0.

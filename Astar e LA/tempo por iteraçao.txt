@@ -1,0 +1,18 @@
+10x10 sem log: 0,06563
+
+
+
+
+5obj, 4zonas, 2transp
+
+17x29 sem log: 0,4428
+17x29 sem log: 0,28539
+17x29 sem log: 0,38581 x=300 Ac=41881
+17x29 sem log: 0,31745 x=303 Ac=41169
+17x29 sem log: 0,26605 x=1600 Ac=195821
+
+17x29 com log: 0,053605 x=317 Ac=1297 L=43791
+17x29 com log: 0,0346 x=317 Ac=1296 L=45762
+
+6x mais rapido para este mapa
+
